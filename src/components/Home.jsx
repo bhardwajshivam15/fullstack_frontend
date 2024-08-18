@@ -1,39 +1,100 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
+import { Container, Typography, Paper, Box, TextField, Button, List, ListItem, ListItemText, IconButton, Divider } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function Home() {
+const HomePage = () => {
+  const [tasks, setTasks] = useState([]);
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+
+  const handleAddTask = () => {
+    if (taskTitle.trim() && taskDescription.trim()) {
+      const newTask = {
+        id: Date.now(),
+        title: taskTitle,
+        description: taskDescription,
+      };
+      setTasks([...tasks, newTask]);
+      setTaskTitle('');
+      setTaskDescription('');
+    }
+  };
+
+  const handleDeleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
   return (
-    <Card variant="outlined" sx={{ maxWidth: 360 }}>
-      <Box sx={{ p: 2 }}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Typography gutterBottom variant="h5" component="div">
-            Toothbrush
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            $4.50
-          </Typography>
-        </Stack>
-        <Typography color="text.secondary" variant="body2">
-          Pinstriped cornflower blue cotton blouse takes you on a walk to the park or
-          just down the hall.
+    <Container maxWidth="md" sx={{ my: 4 }}>
+      {/* Header */}
+      <Typography variant="h2" align="center" gutterBottom>
+        My To-Do App
+      </Typography>
+      <Typography variant="h6" align="center" color="text.secondary" paragraph>
+        Manage your tasks efficiently and stay organized with our intuitive to-do list application.
+      </Typography>
+      
+      {/* Add To-Do Section */}
+      <Paper sx={{ p: 3, mb: 4, borderRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          Add New To-Do
         </Typography>
-      </Box>
-      <Divider />
-      <Box sx={{ p: 2 }}>
-        <Typography gutterBottom variant="body2">
-          Select type
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column' }}>
+          <TextField
+            label="Title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={taskTitle}
+            onChange={(e) => setTaskTitle(e.target.value)}
+          />
+          <TextField
+            label="Description"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+            value={taskDescription}
+            onChange={(e) => setTaskDescription(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            sx={{ mt: 2 }}
+            onClick={handleAddTask}
+          >
+            Add Task
+          </Button>
+        </Box>
+      </Paper>
+
+      {/* To-Do List Section */}
+      <Paper sx={{ p: 3, borderRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          Your Tasks
         </Typography>
-        <Stack direction="row" spacing={1}>
-          <Chip color="primary" label="Soft" size="small" />
-          <Chip label="Medium" size="small" />
-          <Chip label="Hard" size="small" />
-        </Stack>
-      </Box>
-    </Card>
+        <List>
+          {tasks.map(task => (
+            <React.Fragment key={task.id}>
+              <ListItem
+                secondaryAction={
+                  <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteTask(task.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemText primary={task.title} secondary={task.description} />
+              </ListItem>
+              <Divider />
+            </React.Fragment>
+          ))}
+        </List>
+      </Paper>
+    </Container>
   );
-}
+};
+
+export default HomePage;

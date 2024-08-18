@@ -1,54 +1,63 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React from 'react';
+import { Container, Typography, Paper, Box, TextField, Button } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function Contact() {
+const ContactPage = () => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Container maxWidth="md" sx={{ my: 4 }}>
+      <Typography variant="h2" align="center" gutterBottom>
+        Contact Us
+      </Typography>
+      <Paper sx={{ p: 3, borderRadius: 2, boxShadow: 3 }}>
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            mb: 2,
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', // Change font here
+            fontWeight: 500,
+            color: 'primary.main'
+          }}
+        >
+          We&apos;d Love to Hear From You
+        </Typography>
+        <Typography variant="body1" paragraph sx={{ mb: 3 }}>
+          If you have any questions, feedback, or just want to say hello, feel free to reach out to us using the form below. We'll get back to you as soon as possible.
+        </Typography>
+        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', maxWidth: '600px', mx: 'auto' }}>
+          <TextField
+            label="Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Message"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<SendIcon />}
+            sx={{ mt: 2 }}
+          >
+            Send Message
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
-}
+};
+
+export default ContactPage;
