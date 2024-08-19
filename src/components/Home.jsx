@@ -9,13 +9,18 @@ import {
   Button,
   List,
   ListItem,
-  ListItemText,
   IconButton,
   Divider,
+  Card,
+  CardContent,
+  CardActions,
+  CardHeader,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+
+const url = 'http://localhost:8080';
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
@@ -30,7 +35,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/tasks');
+        const response = await axios.get(`${url}/tasks`);
         setTasks(response.data);
         console.log(response);
       } catch (error) {
@@ -170,8 +175,9 @@ const HomePage = () => {
           {tasks.map((task) => (
             <React.Fragment key={task.id}>
               <ListItem
+                sx={{ p: 0 }}
                 secondaryAction={
-                  <>
+                  <CardActions>
                     <IconButton
                       edge="end"
                       aria-label="edit"
@@ -186,10 +192,21 @@ const HomePage = () => {
                     >
                       <DeleteIcon />
                     </IconButton>
-                  </>
+                  </CardActions>
                 }
               >
-                <ListItemText primary={task.title} secondary={task.description} />
+                <Card sx={{ width: '100%', mb: 2 }}>
+                  <CardHeader
+                    title={task.title}
+                    subheader={`ID: ${task.id}`}
+                    sx={{ textAlign: 'center' }}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {task.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
               </ListItem>
               <Divider />
             </React.Fragment>
