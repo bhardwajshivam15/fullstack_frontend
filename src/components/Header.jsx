@@ -12,8 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link } from 'react-router-dom';
 
-const pages = ['Home','About', 'Contact'];
-const links = ['','about','contact'];
+const pages = ['Home','About', 'Contact','Login','SignUp'];
+const links = ['','about','contact','login','signup'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
